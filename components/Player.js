@@ -2,38 +2,40 @@ import React, { useState, useEffect, useRef } from 'react'
 import styles from '../styles/Home.module.css'
 
 
-export default function Player( { currentVideo } ) {
+export default function Player( { videosData } ) {
   const videoRef = useRef("")
   const cldRef = useRef()
-  const  url = currentVideo.url
+
+  const data = videosData.map(x => x.public_id)
+
+  
+ 
   useEffect(() => {
     if(!cldRef.current){
       cldRef.current= window.cloudinary.Cloudinary.new({ cloud_name: "ddmm5ofs1"});
     }
-    
-  }, [])
-  useEffect(() => {
-    if(currentVideo.url){
-      const player = cldRef.current.videoPlayer(videoRef.current.id)
-      console.log(player)
-      player.source("http://res.cloudinary.com/ddmm5ofs1/video/upload/v1586458304/samples/elephants.mp4")
+
+    if(videosData){
+      const player = cldRef.current.videoPlayer(videoRef.current.id, {
+        playlistWidget: {
+          direction: 'horizontal',
+          total: data?.length
+      }})
+      player.playlist(data, { autoAdvance: true, repeat: true, presentUpcoming: 3 })
+
       
     }
-   return ()=>{player = null}
-  }, [currentVideo])
+  }, [videosData])
 
 
   return (
     <div className={styles.player}>
-       {currentVideo.url ? <video
+    <video
         id="example-player" 
         ref={videoRef}
         controls
-        data-cld-public-id="samples/elephants"
-        /* data-cld-public-id={currentVideo?.public_id} */
         className ="cld-video-player cld-video-player-skin-dark">
-      </video> : <h3>Select a video</h3>}
-
+      </video>
     </div>
   )
 

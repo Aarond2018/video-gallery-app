@@ -28,17 +28,18 @@ export default function Home() {
 		}
 	}
 
-	const handleSetCurrentVideo = (obj) => {
+	/* const handleSetCurrentVideo = (obj) => {
 		setCurrentVideo(obj);
-	};
+	}; */
 
 	return (
 		<div className={styles.container}>
 			{videosData ? (
 				<>
 				 {/* {currentVideo.url ? 	<Player currentVideo={currentVideo} /> : null} */}
-				 <Player currentVideo={currentVideo} />
-					<ul className={styles.videos}>
+				 <Player videosData={videosData} />
+				 {/* <Player currentVideo={currentVideo} /> */}
+					{/* <ul className={styles.videos}>
 						{videosData.map((data, i) => {
 							return (
 								<li key={i}>
@@ -48,7 +49,7 @@ export default function Home() {
 								</li>
 							);
 						})}
-					</ul>
+					</ul> */}
 				</>
 			) : (
 				""
