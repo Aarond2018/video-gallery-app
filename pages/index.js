@@ -16,8 +16,7 @@ export default function Home() {
 	async function getVideos() {
 		try {
 			const response = await axios.get("/api/getVideosData");
-			/* setVideosData(response.data); */
-			setVideosData(response.data.data);
+			setVideosData(response.data);
 		} catch (error) {
 			console.error(error);
 		}
