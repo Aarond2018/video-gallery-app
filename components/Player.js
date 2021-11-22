@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styles from '../styles/Home.module.css'
 
 
@@ -6,9 +6,7 @@ export default function Player( { videosData } ) {
   const videoRef = useRef("")
   const cldRef = useRef()
 
-  const data = videosData.map(x => x.public_id)
-
-  
+  const formattedData = videosData.map(x => x.public_id) 
  
   useEffect(() => {
     if(!cldRef.current){
@@ -19,18 +17,16 @@ export default function Player( { videosData } ) {
       const player = cldRef.current.videoPlayer(videoRef.current.id, {
         playlistWidget: {
           direction: 'horizontal',
-          total: data?.length
+          total: formattedData?.length
       }})
-      player.playlist(data, { autoAdvance: true, repeat: true, presentUpcoming: 3 })
-
-      
+      player.playlist(formattedData, { autoAdvance: true, repeat: true, presentUpcoming: 3 }) 
     }
-  }, [videosData])
+  }, [videosData, formattedData])
 
 
   return (
     <div className={styles.player}>
-    <video
+      <video
         id="example-player" 
         ref={videoRef}
         controls
